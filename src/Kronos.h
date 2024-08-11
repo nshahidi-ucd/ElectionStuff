@@ -19,7 +19,7 @@ class Kronos {
         vector<vector<string>> oneMinuteLists;
         vector<string> daysTracker;
         vector<string> weekdays {"Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday","Monday"};
-        bool propSet {false};
+        bool propsSet {false};
     
     public:
         
@@ -40,20 +40,20 @@ class Kronos {
         
         void setListsAndObjs();
         
-        array<string,3> parseTimeStr(string& time_str) const;
-        string buildTimeStr(array<string,3>& parsed_time) const;
-        double timeStrToIndex(string& time_str) const;
-        string dtStrFromIndex(double& index) const;
-        string getWeekday(string& dt_str) const;
-        string getDate(string& dt_str) const;
-        string getDateNum(string& dt_str) const;
-        int getDateNum(string& dt_str, bool& ret_int) const;
-        string getClockTime(string& dt_str) const;
-        array<string,4> parseDtStr(string& dt_str) const;
-        double dtStrToIndex(string& dt_str) const;
-        int dtStrCmp(string& dt_str_1, string dt_str_2) const;
-        string timeStrToDtStr(string& time_str) const;
-        string timeStrToDtStr(string& time_str, int& date) const;
+        array<string,3> parseTimeStr(string time_str) const;
+        string buildTimeStr(array<string,3> parsed_time) const;
+        double timeStrToIndex(string time_str) const;
+        string dtStrFromIndex(double index) const;
+        string getWeekday(string dt_str) const;
+        string getDate(string dt_str) const;
+        string getDateNum(string dt_str) const;
+        int getDateNum(string dt_str, bool ret_int) const;
+        string getClockTime(string dt_str) const;
+        array<string,4> parseDtStr(string dt_str) const;
+        double dtStrToIndex(string dt_str) const;
+        int dtStrCmp(string dt_str_1, string dt_str_2) const;
+        string timeStrToDtStr(string time_str) const;
+        string timeStrToDtStr(string time_str, int date) const;
 
 };
 
