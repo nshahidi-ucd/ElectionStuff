@@ -11,26 +11,35 @@
     using std::array;
 
 class Kronos {
+    
+    
     private:
+        
         vector<string> tenMinuteList;
         vector<vector<string>> oneMinuteLists;
         vector<string> daysTracker;
         vector<string> weekdays {"Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday","Monday"};
         bool propSet {false};
+    
     public:
+        
         Kronos();
         ~Kronos() = default;
-        void setListsAndObjs();
+        
         vector<string> getTenMinuteList() const;
         vector<vector<string>> getOneMinuteLists() const;
         vector<string> getDaysTracker() const;
         vector<string> getWeekdays() const;
         bool getPropsSet() const;
+        
         void setTenMinuteList(vector<string> theTenMinuteList);
         void setOneMinuteLists(vector<vector<string>> theOneMinuteLists);
         void setDaysTracker(vector<string> theDaysTracker);
         void setWeekdays(vector<string> theWeekdays);
         void setPropsSet(bool thePropsSet);
+        
+        void setListsAndObjs();
+        
         array<string,3> parseTimeStr(string& time_str) const;
         string buildTimeStr(array<string,3>& parsed_time) const;
         double timeStrToIndex(string& time_str) const;
@@ -42,8 +51,10 @@ class Kronos {
         string getClockTime(string& dt_str) const;
         array<string,4> parseDtStr(string& dt_str) const;
         double dtStrToIndex(string& dt_str) const;
-        string& dtStrCmp(string& dt_str_1, string dt_str_2) const;
+        int dtStrCmp(string& dt_str_1, string dt_str_2) const;
         string timeStrToDtStr(string& time_str) const;
+        string timeStrToDtStr(string& time_str, int& date) const;
+
 };
 
 #endif
