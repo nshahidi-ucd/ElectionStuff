@@ -7,6 +7,8 @@
 #include <array>
     using std::array;
 
+#include <cmath>
+
 Election::Election() {}
 
 Election::Election(char thePreviousWinner, string theClosingTime) : previousWinner{thePreviousWinner}, closingTime{theClosingTime} {}
@@ -147,6 +149,10 @@ string Election::getClosingTime() const {
     return this->closingTime;
 }
 
+string Election::getPartyOrder() const {
+    return this->partyOrder;
+}
+
 Kronos* Election::getKronosInstance() const {
     return this->kronosInstance;
 }
@@ -259,6 +265,181 @@ void Election::setClosingTime(string theClosingTime) {
     this->closingTime = theClosingTime;
 }
 
+void Election::setPartyOrder(string thePartyOrder) {
+    this->partyOrder = thePartyOrder;
+}
+
 void Election::setKronosInstance(Kronos* theKronosInstance) {
     this->kronosInstance = theKronosInstance;
+}
+
+int Election::getVotes(char party) {
+    switch(party) {
+        case 'R': {
+            return this->rv;
+            break;
+        }
+        case 'D': {
+            return this->dv;
+            break;
+        }
+        case 'L': {
+            return this->lv;
+            break;
+        }
+        case 'K': {
+            return this->kv;
+            break;
+        }
+        default: {
+            return -1;
+            break;
+        }
+    }
+}
+
+float Election::getPct(char party) {
+    switch(party) {
+        case 'R': {
+            return this->rp;
+            break;
+        }
+        case 'D': {
+            return this->dp;
+            break;
+        }
+        case 'L': {
+            return this->lp;
+            break;
+        }
+        case 'K': {
+            return this->kp;
+            break;
+        }
+        default: {
+            return -1.0;
+            break;
+        }
+    }
+}
+
+void Election::setPcts() {
+    int t_v = 0;
+    t_v += this->rv;
+    t_v += this->dv;
+    t_v += this->lv;
+    t_v += this->kv;
+    if(!t_v){
+        this->rp = 0.0;
+        this->dp = 0.0;
+        this->lp = 0.0;
+        this->kp = 0.0;
+        this->mp = 0.0
+        this->tv = 0;
+        this->mv = 0;
+        this->leader = ' ';
+    } else {
+        double r_p_ = this->rv / t_v;
+        double d_p_ = this->dv / t_v;
+        double l_p_ = this->lv / t_v;
+        double k_p_;
+        if(this->hasKennedy) k_p_ = this->kv / t_v;
+        double r_p = round(r_p_ * 1000);
+        double d_p = round(d_p_ * 1000);
+        double l_p = round(l_p_ * 1000);
+        double k_p;
+        if(this->hasKennedy) k_p = round(k_p_ * 1000);
+        this->rp = static_cast<float>(r_p / 10);
+        this->dp = static_cast<float>(d_p / 10);
+        this->lp = static_cast<float>(l_p / 10);
+        if(this->hasKennedy) this->kp = static_cast<float>(k_p / 10);
+        this->tv = t_v;
+    }
+    this->updatePartyOrder();
+    this->leader = this->partyOrder.at(0);
+    this->mv = this->getVotes(this->partyOrder.at(0)) - this->getVotes(this->partyOrder.at(0));
+    this->mp = this->getPct(this->partyOrder.at(0)) - this->getPct(this->partyOrder.at(0));
+}
+
+void Election::updatePartyOrder() {
+    char party_1, party_2, party_3, party_4, temp_p1, temp_p2, temp_p3;
+    int votes_1, votes_2, votes_3, votes_4, temp_v1, temp_v2, temp_v3;
+    if(this->rv >= this->dv) {
+        party_1 = 'R';
+        party_2 = 'D';
+        votes_1 = this->rv;
+        votes_2 = this->dv;
+    }
+    else {
+        party_1 = 'D';
+        party_2 = 'R';
+        votes_1 = this->dv;
+        votes_2 = this->rv;
+    }
+    if(this->lv > votes_1) {
+        temp_p1 = party_1;
+        temp_p2 = party_2;
+        temp_v1 = votes_1;
+        temp_v2 = votes_2;
+        party_1 = 'L';
+        party_2 = temp_p1;
+        party_3 = temp_p2;
+        votes_1 = this->lv;
+        votes_2 = temp_v1;
+        votes_3 = temp_v2;
+    } else if(this->lv >= votes_2) {
+        temp_p2 = party_2;
+        temp_v2 = votes_2;
+        party_2 = 'L';
+        votes_2 = this->lv;
+        party_3 = temp_p2;
+        votes_3 = temp_v2;
+    } else {
+        party_3 = 'L';
+        votes_3 = this->lv;
+    }
+    if(this->hasKennedy) {
+        if(this->kv > votes_1) {
+            temp_p1 = party_1;
+            temp_p2 = party_2;
+            temp_p3 = party_3;
+            temp_v1 = votes_1;
+            temp_v2 = votes_2;
+            temp_v3 = votes_3;
+            party_1 = 'K';
+            party_2 = temp_p1;
+            party_3 = temp_p2;
+            party_4 = temp_p3;
+            votes_1 = this->kv;
+            votes_2 = temp_v1;
+            votes_3 = temp_v2;
+            votes_4 = temp_v3;
+        } else if (this->kv >= votes_2) {
+            temp_p2 = party_2;
+            temp_p3 = party_3;
+            temp_v2 = votes_2;
+            temp_v3 = votes_3;
+            party_2 = 'K';
+            party_3 = temp_p2;
+            party_4 = temp_p3;
+            votes_2 = this->kv;
+            votes_3 = temp_v2;
+            votes_4 = temp_v3;
+        } else if(this->kv >= votes_3) {
+            temp_p3 = party_3;
+            temp_v3 = votes_3;
+            party_3 = 'K';
+            votes_3 = this->kv;
+            party_4 = temp_p3;
+            votes_4 = temp_v3;
+        } else {
+            party_4 = 'K';
+            votes_4 = this->kv;
+        }
+    }
+    this->partyOrder = "";
+    this->partyOrder += party_1;
+    this->partyOrder += party_2;
+    this->partyOrder += party_3;
+    if(this->hasKennedy) this->partyOrder += party_4;
 }

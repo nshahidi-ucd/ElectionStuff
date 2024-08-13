@@ -42,6 +42,7 @@ class Election {
         bool wasRejected{false};
 
         string closingTime;
+        string partyOrder;
 
         Kronos* kronosInstance{nullptr};
         
@@ -87,6 +88,7 @@ class Election {
             bool getIsFlip() const;
             bool getWasRejected() const;
             string getClosingTime() const;
+            string getPartyOrder() const;
             Kronos* getKronosInstance() const;
 
             void setRv(int theRv);
@@ -116,7 +118,13 @@ class Election {
             void setIsFlip(bool is_Flip);
             void setWasRejected(bool was_Rejected);
             void setClosingTime(string theClosingTime);
+            void setPartyOrder(string thePartyOrder);
             void setKronosInstance(Kronos* theKronosInstance);
+
+            int getVotes(char party);
+            float getPct(char party);
+            void setPcts() {}
+            void updatePartyOrder()
 };
 
 #endif
