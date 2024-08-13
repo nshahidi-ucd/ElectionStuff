@@ -11,17 +11,29 @@ Election::Election() {}
 
 Election::Election(char thePreviousWinner, string theClosingTime) : previousWinner{thePreviousWinner}, closingTime{theClosingTime} {}
 
-Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy) : Election(thePreviousWinner, theClosingTime) : hasKennedy{has_Kennedy} {}
+Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy) : Election(thePreviousWinner, theClosingTime) {
+    this->hasKennedy = has_Kennedy;
+}
 
-Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn) : Election(thePreviousWinner, theClosingTime, hasKennedy) : rn{theRn} {}
+Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn) : Election(thePreviousWinner, theClosingTime, hasKennedy){
+    this->rn = theRn;
+} 
 
-Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn) : dn{theDn} {}
+Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn) {
+    this->dn = theDn;
+}
 
-Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn, theDn) : ln{theLn} {}
+Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn, theDn) {
+    this->ln = theLn;
+}
 
-Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn, Kronos* theKronosInstance) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn, theDn, theLn) : kronosInstance{theKronosInstance} {}
+Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn, Kronos* theKronosInstance) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn, theDn, theLn) {
+    this->kronosInstance = theKronosInstance;
+}
 
-Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn, Kronos* theKronosInstance, int theKn) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn, theDn, theLn, theKronosInstance) : kn{theKn} {}
+Election::Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn, Kronos* theKronosInstance, int theKn) : Election(thePreviousWinner, theClosingTime, hasKennedy, theRn, theDn, theLn, theKronosInstance) {
+    this->kn = theKn;
+}
 
 Election::~Election(){
     this->kronosInstance = nullptr;

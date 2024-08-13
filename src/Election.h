@@ -34,6 +34,7 @@ class Election {
         char projectedFor;
 
         bool hasKennedy{false};
+        bool isClosed{false};
         bool isCounting{false};
         bool isFinished{false};
         bool isProjected{false};
@@ -52,7 +53,6 @@ class Election {
             explicit Election(char thePreviousWinner, string theClosingTime);
             explicit Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy);
             explicit Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn);
-            explicit Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn);
             explicit Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn);
             explicit Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn);
             explicit Election(char thePreviousWinner, string theClosingTime, bool has_Kennedy, int theRn, int theDn, int theLn, Kronos* theKronosInstance);
